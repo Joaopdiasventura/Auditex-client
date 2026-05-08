@@ -12,7 +12,7 @@ export class WalletVaultService {
   private readonly version = 1;
   private readonly walletCryptoService = inject(WalletCryptoService);
 
-  async save(wallet: ReturnWalletDto, password: string): Promise<StoredWallet> {
+  public async save(wallet: ReturnWalletDto, password: string): Promise<StoredWallet> {
     const encrypted = await this.walletCryptoService.encryptPrivateKey(wallet.privateKey, password);
 
     const storedWallet: StoredWallet = {
@@ -44,7 +44,7 @@ export class WalletVaultService {
     return storedWallet;
   }
 
-  async findAll(): Promise<StoredWallet[]> {
+  public async findAll(): Promise<StoredWallet[]> {
     const database = await this.openDatabase();
 
     const result = await new Promise<StoredWallet[]>((resolve, reject) => {
@@ -61,7 +61,7 @@ export class WalletVaultService {
     return result;
   }
 
-  async findByAddress(address: string): Promise<StoredWallet | null> {
+  public async findByAddress(address: string): Promise<StoredWallet | null> {
     const database = await this.openDatabase();
 
     const result = await new Promise<StoredWallet | null>((resolve, reject) => {
@@ -78,7 +78,7 @@ export class WalletVaultService {
     return result;
   }
 
-  async deleteByAddress(address: string): Promise<void> {
+  public async deleteByAddress(address: string): Promise<void> {
     const database = await this.openDatabase();
 
     await new Promise<void>((resolve, reject) => {
@@ -93,7 +93,7 @@ export class WalletVaultService {
     database.close();
   }
 
-  async decryptPrivateKey(wallet: StoredWallet, password: string): Promise<string> {
+  public async decryptPrivateKey(wallet: StoredWallet, password: string): Promise<string> {
     return this.walletCryptoService.decryptPrivateKey(
       wallet.encryptedPrivateKey,
       password,
@@ -101,6 +101,38 @@ export class WalletVaultService {
       wallet.iv,
       wallet.iterations,
     );
+  }
+
+  public async saveImported(wallet: ReturnWalletDto, password: string): Promise<StoredWallet> {
+    const encrypted = await this.walletCryptoService.encryptPrivateKey(wallet.privateKey, password);
+
+    const storedWallet: StoredWallet = {
+      id: wallet.id,
+      ownerName: wallet.ownerName,
+      address: wallet.address,
+      publicKey: wallet.publicKey,
+      encryptedPrivateKey: encrypted.encryptedPrivateKey,
+      salt: encrypted.salt,
+      iv: encrypted.iv,
+      kdf: 'PBKDF2',
+      iterations: encrypted.iterations,
+      createdAt: wallet.createdAt,
+    };
+
+    const database = await this.openDatabase();
+
+    await new Promise<void>((resolve, reject) => {
+      const transaction = database.transaction(this.storeName, 'readwrite');
+      const store = transaction.objectStore(this.storeName);
+      const request = store.put(storedWallet);
+
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+    });
+
+    database.close();
+
+    return storedWallet;
   }
 
   private openDatabase(): Promise<IDBDatabase> {
