@@ -11,6 +11,9 @@
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
+        },
+        "@schematics/angular:service": {
+          "type": "service"
         }
       },
       "root": "",
@@ -35,6 +38,9 @@
           },
           "configurations": {
             "production": {
+              "define": {
+                "API_URL": "'https://api.auditex.joaopdias.dev.br'"
+              },
               "budgets": [
                 {
                   "type": "initial",
@@ -50,6 +56,9 @@
               "outputHashing": "all"
             },
             "development": {
+              "define": {
+                "API_URL": "'http://localhost:8080'"
+              },
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true

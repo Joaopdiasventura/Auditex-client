@@ -1,0 +1,63 @@
+<section class="create-wallet">
+  <h1>Criar carteira</h1>
+
+  <form (submit)="submit(); $event.preventDefault()">
+    <label>
+      Nome do proprietário
+      <input
+        type="text"
+        [value]="createWalletDto().ownerName"
+        (input)="createWalletDto.set({ ownerName: $any($event.target).value })"
+      />
+    </label>
+
+    <button type="submit" [disabled]="isLoading()">Criar carteira</button>
+  </form>
+
+  @if (errorMessage()) {
+    <p>{{ errorMessage() }}</p>
+  }
+
+  @if (createdWallet()) {
+    <section>
+      <h2>Carteira criada</h2>
+
+      <p>Endereço</p>
+      <textarea readonly>{{ createdWallet()?.address }}</textarea>
+
+      <p>Chave pública</p>
+      <textarea readonly>{{ createdWallet()?.publicKey }}</textarea>
+
+      <p>Chave privada</p>
+      <textarea readonly>{{ createdWallet()?.privateKey }}</textarea>
+
+      <h3>Salvar no cofre local</h3>
+
+      <label>
+        Senha local
+        <input
+          type="password"
+          [value]="vaultPassword()"
+          (input)="vaultPassword.set($any($event.target).value)"
+        />
+      </label>
+
+      <label>
+        Confirmar senha
+        <input
+          type="password"
+          [value]="confirmVaultPassword()"
+          (input)="confirmVaultPassword.set($any($event.target).value)"
+        />
+      </label>
+
+      <button type="button" (click)="saveInVault()" [disabled]="isLoading()">
+        Salvar carteira criptografada
+      </button>
+
+      @if (vaultSaved()) {
+        <p>Carteira salva localmente com a chave privada criptografada.</p>
+      }
+    </section>
+  }
+</section>
