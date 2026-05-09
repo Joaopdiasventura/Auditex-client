@@ -1,0 +1,89 @@
+<section class="create-transaction-page">
+  <div class="header">
+    <p class="eyebrow">Auditex Ledger</p>
+    <h1>Criar transação</h1>
+    <p>
+      Selecione uma carteira local, desbloqueie com sua senha e assine a transação no navegador.
+    </p>
+  </div>
+
+  @if (wallets().length === 0) {
+    <div class="empty-state">
+      <h2>Nenhuma carteira encontrada</h2>
+      <p>Crie ou importe uma carteira antes de criar transações.</p>
+    </div>
+  } @else {
+    <form class="form" (submit)="submit(); $event.preventDefault()">
+      <label class="field">
+        <span>Carteira</span>
+
+        <select
+          [value]="selectedAddress()"
+          (change)="updateSelectedAddress($any($event.target).value)"
+        >
+          @for (wallet of wallets(); track wallet.address) {
+            <option [value]="wallet.address">
+              {{ wallet.ownerName }} — {{ formatAddress(wallet.address) }}
+            </option>
+          }
+        </select>
+      </label>
+
+      <label class="field">
+        <span>Tipo da transação</span>
+
+        <input
+          type="text"
+          [value]="createTransactionDto().type"
+          (input)="updateField('type', $any($event.target).value)"
+          placeholder="INVOICE_PAID"
+        />
+      </label>
+
+      <label class="field">
+        <span>Payload JSON</span>
+
+        <textarea
+          rows="9"
+          [value]="createTransactionDto().payload"
+          (input)="updateField('payload', $any($event.target).value)"
+          placeholder='{ "invoiceId": "INV-001", "amount": 1500.75, "currency": "BRL" }'
+        ></textarea>
+      </label>
+
+      <label class="field">
+        <span>Senha local da carteira</span>
+
+        <input
+          type="password"
+          [value]="createTransactionDto().password"
+          (input)="updateField('password', $any($event.target).value)"
+          placeholder="Senha usada para proteger a private key"
+        />
+      </label>
+
+      @if (errorMessage()) {
+        <p class="message error">{{ errorMessage() }}</p>
+      }
+
+      @if (successMessage()) {
+        <p class="message success">{{ successMessage() }}</p>
+      }
+
+      @if (transactionHash()) {
+        <div class="result">
+          <span>Hash da transação</span>
+          <code>{{ transactionHash() }}</code>
+        </div>
+      }
+
+      <button class="submit" type="submit" [disabled]="isLoading()">
+        @if (isLoading()) {
+          Assinando...
+        } @else {
+          Assinar e enviar transação
+        }
+      </button>
+    </form>
+  }
+</section>
