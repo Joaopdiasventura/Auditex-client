@@ -10,15 +10,15 @@ describe('EmptyState', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(EmptyState);
-    fixture.componentRef.setInput('title', 'No data');
-    fixture.componentRef.setInput('message', 'Nothing was found');
+    fixture.componentRef.setInput('title', 'Nenhum dado');
+    fixture.componentRef.setInput('message', 'Nada foi encontrado');
     fixture.detectChanges();
   });
 
   it('should create and render the empty state', () => {
     const element = fixture.nativeElement as HTMLElement;
     expect(fixture.componentInstance).toBeTruthy();
-    expect(element.querySelector('h2')?.textContent).toContain('No data');
-    expect(element.textContent).toContain('Nothing was found');
+    expect(element.querySelector('h2')?.textContent).toContain('Nenhum dado');
+    expect(element.textContent).toContain('Nada foi encontrado');
   });
 });

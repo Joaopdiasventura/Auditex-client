@@ -11,7 +11,7 @@ describe('SectionCard', () => {
 
     fixture = TestBed.createComponent(SectionCard);
     fixture.componentRef.setInput('label', 'Ledger');
-    fixture.componentRef.setInput('title', 'Integrity');
+    fixture.componentRef.setInput('title', 'Integridade');
     fixture.componentRef.setInput('tone', 'accent');
     fixture.detectChanges();
   });
@@ -20,7 +20,7 @@ describe('SectionCard', () => {
     const element = fixture.nativeElement as HTMLElement;
     expect(fixture.componentInstance).toBeTruthy();
     expect(element.textContent).toContain('Ledger');
-    expect(element.querySelector('h2')?.textContent).toContain('Integrity');
+    expect(element.querySelector('h2')?.textContent).toContain('Integridade');
     expect(element.querySelector('.section-card')?.classList.contains('accent')).toBe(true);
   });
 });

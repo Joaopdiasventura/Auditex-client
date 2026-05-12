@@ -8,6 +8,7 @@ import { MetricCard } from '../../../../shared/components/metric-card/metric-car
 import { PageHeader } from '../../../../shared/components/page-header/page-header';
 import { SectionCard } from '../../../../shared/components/section-card/section-card';
 import { formatDateTime, shortValue } from '../../../../shared/utils/format';
+import { validationReasonLabel } from '../../../../shared/utils/validation-reason-label';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -38,7 +39,7 @@ export class DashboardPage implements OnInit {
         this.isLoading.set(false);
       },
       error: () => {
-        this.errorMessage.set('Unable to load ledger status');
+        this.errorMessage.set('Não foi possível carregar o status do ledger');
         this.isLoading.set(false);
       },
     });
@@ -55,7 +56,7 @@ export class DashboardPage implements OnInit {
         this.load();
       },
       error: () => {
-        this.errorMessage.set('Unable to validate ledger integrity');
+        this.errorMessage.set('Não foi possível validar a integridade do ledger');
         this.isValidating.set(false);
       },
     });
@@ -67,5 +68,9 @@ export class DashboardPage implements OnInit {
 
   protected formatDate(value: string | null): string {
     return formatDateTime(value);
+  }
+
+  protected validationReason(reason: string | null): string {
+    return validationReasonLabel(reason);
   }
 }

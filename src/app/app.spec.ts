@@ -22,7 +22,7 @@ describe('App', () => {
     await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.textContent).toContain('Auditex');
-    expect(compiled.textContent).toContain('Dashboard');
-    expect(compiled.querySelector('nav')?.getAttribute('aria-label')).toBe('Primary navigation');
+    expect(compiled.textContent).toContain('Painel');
+    expect(compiled.querySelector('nav')?.getAttribute('aria-label')).toBe('Navegação principal');
   });
 });

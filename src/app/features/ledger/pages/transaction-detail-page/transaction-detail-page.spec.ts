@@ -31,8 +31,8 @@ describe('TransactionDetailPage', () => {
   it('should create and render transaction detail', () => {
     const element = fixture.nativeElement as HTMLElement;
     expect(fixture.componentInstance).toBeTruthy();
-    expect(element.textContent).toContain('Billing file received');
-    expect(element.textContent).toContain('MINED');
+    expect(element.textContent).toContain('Arquivo de faturamento recebido');
+    expect(element.textContent).toContain('Minerada');
     expect(element.textContent).toContain('"amount": 10');
     expect(transactionService.findByHash).toHaveBeenCalledWith('tx-hash');
   });
@@ -43,7 +43,7 @@ describe('TransactionDetailPage', () => {
     errorFixture.detectChanges();
     await errorFixture.whenStable();
 
-    expect((errorFixture.nativeElement as HTMLElement).textContent).toContain('Unable to load transaction');
+    expect((errorFixture.nativeElement as HTMLElement).textContent).toContain('Não foi possível carregar a transação');
   });
 });
 

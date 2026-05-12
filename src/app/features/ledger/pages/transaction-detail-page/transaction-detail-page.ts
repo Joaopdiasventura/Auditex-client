@@ -1,9 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import {
-  FINANCIAL_EVENT_LABELS,
-  FinancialEventType,
-} from '../../../../core/models/financial-event/financial-event-type';
+import { financialEventLabel } from '../../../../core/models/financial-event/financial-event-type';
 import { Transaction } from '../../../../core/models/transaction/transaction';
 import { TransactionService } from '../../../../core/services/transaction/transaction.service';
 import { HashValue } from '../../../../shared/components/hash-value/hash-value';
@@ -30,7 +27,7 @@ export class TransactionDetailPage implements OnInit {
   ngOnInit(): void {
     const hash = this.route.snapshot.paramMap.get('hash');
     if (!hash) {
-      this.errorMessage.set('Transaction hash is required');
+      this.errorMessage.set('O hash da transação é obrigatório');
       return;
     }
 
@@ -41,14 +38,14 @@ export class TransactionDetailPage implements OnInit {
         this.isLoading.set(false);
       },
       error: () => {
-        this.errorMessage.set('Unable to load transaction');
+        this.errorMessage.set('Não foi possível carregar a transação');
         this.isLoading.set(false);
       },
     });
   }
 
   protected label(type: string): string {
-    return FINANCIAL_EVENT_LABELS[type as FinancialEventType] ?? type;
+    return financialEventLabel(type);
   }
 
   protected short(value: string | null): string {

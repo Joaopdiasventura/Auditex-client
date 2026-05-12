@@ -1,17 +1,17 @@
 <section class="ledger-page page-layout">
   <app-page-header
-    eyebrow="Financial ledger"
-    title="Auditable financial events"
-    description="Search the immutable trail by event type, processing id or file hash."
+    eyebrow="Ledger financeiro"
+    title="Eventos financeiros auditáveis"
+    description="Busque a trilha imutável por tipo de evento, ID do processamento ou hash do arquivo."
   >
-    <a class="primary-action" routerLink="/event/create">Create event</a>
+    <a class="primary-action" routerLink="/event/create">Criar evento</a>
   </app-page-header>
 
   <section class="filters">
     <label>
-      <span>Type</span>
+      <span>Tipo</span>
       <select class="form-control" [value]="typeFilter()" (change)="updateType($any($event.target).value)">
-        <option value="">All event types</option>
+        <option value="">Todos os tipos de evento</option>
         @for (type of eventTypes; track type) {
           <option [value]="type">{{ label(type) }}</option>
         }
@@ -19,7 +19,7 @@
     </label>
 
     <label>
-      <span>Processing ID</span>
+      <span>ID do processamento</span>
       <input
         class="form-control"
         type="text"
@@ -30,7 +30,7 @@
     </label>
 
     <label>
-      <span>File hash</span>
+      <span>Hash do arquivo</span>
       <input
         class="form-control"
         type="text"
@@ -40,8 +40,8 @@
       />
     </label>
 
-    <button class="primary-action" type="button" (click)="applyFilters()" [disabled]="isLoading()">Apply</button>
-    <button class="secondary-action" type="button" (click)="clearFilters()" [disabled]="isLoading()">Clear</button>
+    <button class="primary-action" type="button" (click)="applyFilters()" [disabled]="isLoading()">Aplicar</button>
+    <button class="secondary-action" type="button" (click)="clearFilters()" [disabled]="isLoading()">Limpar</button>
   </section>
 
   @if (errorMessage()) {
@@ -52,12 +52,12 @@
     <table>
       <thead>
         <tr>
-          <th>Event</th>
+          <th>Evento</th>
           <th>Status</th>
           <th>Hash</th>
-          <th>Public key</th>
-          <th>Block</th>
-          <th>Mined at</th>
+          <th>Chave pública</th>
+          <th>Bloco</th>
+          <th>Minerada em</th>
         </tr>
       </thead>
       <tbody>
@@ -66,7 +66,6 @@
             <tr>
               <td>
                 <a [routerLink]="['/ledger/transaction', transaction.hash]">{{ label(transaction.type) }}</a>
-                <span>{{ transaction.type }}</span>
               </td>
               <td><app-status-badge [status]="transaction.status" /></td>
               <td><app-hash-value [value]="transaction.hash" /></td>
@@ -76,12 +75,12 @@
             </tr>
           } @empty {
             <tr>
-              <td colspan="6">No financial events found.</td>
+              <td colspan="6">Nenhum evento financeiro encontrado.</td>
             </tr>
           }
         } @else {
           <tr>
-            <td colspan="6">{{ isLoading() ? 'Loading events...' : 'No financial events loaded.' }}</td>
+            <td colspan="6">{{ isLoading() ? 'Carregando eventos...' : 'Nenhum evento financeiro carregado.' }}</td>
           </tr>
         }
       </tbody>
@@ -90,10 +89,10 @@
 
   @if (pageData(); as page) {
     <div class="pagination">
-      <span>Page {{ page.page + 1 }} of {{ page.totalPages || 1 }} · {{ page.totalElements }} events</span>
+      <span>Página {{ page.page + 1 }} de {{ page.totalPages || 1 }} · {{ page.totalElements }} eventos</span>
       <div class="pagination-actions">
-        <button class="secondary-action" type="button" (click)="load(page.page - 1)" [disabled]="page.first || isLoading()">Previous</button>
-        <button class="secondary-action" type="button" (click)="load(page.page + 1)" [disabled]="page.last || isLoading()">Next</button>
+        <button class="secondary-action" type="button" (click)="load(page.page - 1)" [disabled]="page.first || isLoading()">Anterior</button>
+        <button class="secondary-action" type="button" (click)="load(page.page + 1)" [disabled]="page.last || isLoading()">Próxima</button>
       </div>
     </div>
   }

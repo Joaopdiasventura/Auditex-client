@@ -36,7 +36,7 @@ describe('BlockListPage', () => {
   it('should create and render blocks', () => {
     const element = fixture.nativeElement as HTMLElement;
     expect(fixture.componentInstance).toBeTruthy();
-    expect(element.textContent).toContain('Immutable settlement blocks');
+    expect(element.textContent).toContain('Blocos imutáveis de liquidação');
     expect(element.textContent).toContain('#1');
     expect(blockService.page).toHaveBeenCalledWith(0, 20);
   });
@@ -47,7 +47,7 @@ describe('BlockListPage', () => {
     errorFixture.detectChanges();
     await errorFixture.whenStable();
 
-    expect((errorFixture.nativeElement as HTMLElement).textContent).toContain('Unable to load blocks');
+    expect((errorFixture.nativeElement as HTMLElement).textContent).toContain('Não foi possível carregar os blocos');
   });
 });
 

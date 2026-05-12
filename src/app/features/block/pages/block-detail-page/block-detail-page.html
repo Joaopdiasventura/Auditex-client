@@ -1,5 +1,5 @@
 <section class="block-detail-page page-layout">
-  <a class="back-link" routerLink="/block">Back to blocks</a>
+  <a class="back-link" routerLink="/block">Voltar para blocos</a>
 
   @if (errorMessage()) {
     <p class="message error">{{ errorMessage() }}</p>
@@ -7,30 +7,30 @@
 
   @if (data(); as current) {
     <app-page-header
-      eyebrow="Block detail"
-      [title]="'Block #' + current.block.index"
-      [description]="current.block.transactionsCount + ' financial events sealed in this block.'"
+      eyebrow="Detalhes do bloco"
+      [title]="'Bloco #' + current.block.index"
+      [description]="current.block.transactionsCount + ' eventos financeiros selados neste bloco.'"
     >
-      <app-status-badge [status]="'Difficulty ' + current.block.difficulty" />
+      <app-status-badge [status]="'Dificuldade ' + current.block.difficulty" />
     </app-page-header>
 
     <section class="detail-grid">
       <app-section-card label="Hash">
         <app-hash-value [value]="current.block.hash" [head]="24" [tail]="18" />
       </app-section-card>
-      <app-section-card label="Previous hash">
+      <app-section-card label="Hash anterior">
         <app-hash-value [value]="current.block.previousHash" [head]="24" [tail]="18" />
       </app-section-card>
-      <app-section-card label="Merkle Root">
+      <app-section-card label="Raiz de Merkle">
         <app-hash-value [value]="current.block.merkleRoot" [head]="24" [tail]="18" />
       </app-section-card>
       <app-section-card label="Nonce">
         <strong>{{ current.block.nonce }}</strong>
       </app-section-card>
-      <app-section-card label="Mined at">
+      <app-section-card label="Minerado em">
         <strong>{{ formatDate(current.block.minedAt) }}</strong>
       </app-section-card>
-      <app-section-card label="Created at">
+      <app-section-card label="Criado em">
         <strong>{{ formatDate(current.block.createdAt) }}</strong>
       </app-section-card>
     </section>
@@ -39,11 +39,11 @@
       <table>
         <thead>
           <tr>
-            <th>Index</th>
-            <th>Event</th>
+            <th>Índice</th>
+            <th>Evento</th>
             <th>Status</th>
             <th>Hash</th>
-            <th>Mined at</th>
+            <th>Minerada em</th>
           </tr>
         </thead>
         <tbody>
@@ -57,7 +57,7 @@
             </tr>
           } @empty {
             <tr>
-              <td colspan="5">No transactions found in this block.</td>
+              <td colspan="5">Nenhuma transação encontrada neste bloco.</td>
             </tr>
           }
         </tbody>
@@ -66,14 +66,14 @@
 
     <div class="pagination">
       <span>
-        Page {{ current.transactions.page + 1 }} of {{ current.transactions.totalPages || 1 }}
+        Página {{ current.transactions.page + 1 }} de {{ current.transactions.totalPages || 1 }}
       </span>
       <div class="pagination-actions">
-        <button class="secondary-action" type="button" (click)="load(current.transactions.page - 1)" [disabled]="current.transactions.first || isLoading()">Previous</button>
-        <button class="secondary-action" type="button" (click)="load(current.transactions.page + 1)" [disabled]="current.transactions.last || isLoading()">Next</button>
+        <button class="secondary-action" type="button" (click)="load(current.transactions.page - 1)" [disabled]="current.transactions.first || isLoading()">Anterior</button>
+        <button class="secondary-action" type="button" (click)="load(current.transactions.page + 1)" [disabled]="current.transactions.last || isLoading()">Próxima</button>
       </div>
     </div>
   } @else {
-    <div class="empty-state">{{ isLoading() ? 'Loading block...' : 'Block not loaded.' }}</div>
+    <div class="empty-state">{{ isLoading() ? 'Carregando bloco...' : 'Bloco não carregado.' }}</div>
   }
 </section>

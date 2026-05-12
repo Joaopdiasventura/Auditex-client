@@ -7,7 +7,7 @@ export function shortValue(value: string | null | undefined, head = 10, tail = 8
 
 export function formatDateTime(value: string | null | undefined, timeStyle: 'short' | 'medium' = 'short'): string {
   if (!value) return '-';
-  return new Intl.DateTimeFormat('en-US', {
+  return new Intl.DateTimeFormat('pt-BR', {
     dateStyle: 'medium',
     timeStyle,
   }).format(new Date(value));

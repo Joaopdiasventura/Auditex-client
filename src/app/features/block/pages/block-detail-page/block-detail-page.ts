@@ -1,10 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BlockTransactions } from '../../../../core/models/block/block-transactions';
-import {
-  FINANCIAL_EVENT_LABELS,
-  FinancialEventType,
-} from '../../../../core/models/financial-event/financial-event-type';
+import { financialEventLabel } from '../../../../core/models/financial-event/financial-event-type';
 import { BlockService } from '../../../../core/services/block/block.service';
 import { HashValue } from '../../../../shared/components/hash-value/hash-value';
 import { PageHeader } from '../../../../shared/components/page-header/page-header';
@@ -34,7 +31,7 @@ export class BlockDetailPage implements OnInit {
   protected load(page: number): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (!id) {
-      this.errorMessage.set('Block id is required');
+      this.errorMessage.set('O ID do bloco é obrigatório');
       return;
     }
 
@@ -47,14 +44,14 @@ export class BlockDetailPage implements OnInit {
         this.isLoading.set(false);
       },
       error: () => {
-        this.errorMessage.set('Unable to load block');
+        this.errorMessage.set('Não foi possível carregar o bloco');
         this.isLoading.set(false);
       },
     });
   }
 
   protected label(type: string): string {
-    return FINANCIAL_EVENT_LABELS[type as FinancialEventType] ?? type;
+    return financialEventLabel(type);
   }
 
   protected short(value: string | null): string {

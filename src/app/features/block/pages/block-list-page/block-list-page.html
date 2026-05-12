@@ -1,8 +1,8 @@
 <section class="block-list-page page-layout">
   <app-page-header
-    eyebrow="Blocks explorer"
-    title="Immutable settlement blocks"
-    description="Review block hashes, proof-of-work and event counts."
+    eyebrow="Explorador de blocos"
+    title="Blocos imutáveis de liquidação"
+    description="Revise hashes de blocos, prova de trabalho e contagem de eventos."
   />
 
   @if (errorMessage()) {
@@ -13,13 +13,13 @@
     <table>
       <thead>
         <tr>
-          <th>Index</th>
+          <th>Índice</th>
           <th>Hash</th>
-          <th>Previous hash</th>
-          <th>Difficulty</th>
+          <th>Hash anterior</th>
+          <th>Dificuldade</th>
           <th>Nonce</th>
-          <th>Events</th>
-          <th>Mined at</th>
+          <th>Eventos</th>
+          <th>Minerado em</th>
         </tr>
       </thead>
       <tbody>
@@ -36,12 +36,12 @@
             </tr>
           } @empty {
             <tr>
-              <td colspan="7">No blocks found.</td>
+              <td colspan="7">Nenhum bloco encontrado.</td>
             </tr>
           }
         } @else {
           <tr>
-            <td colspan="7">{{ isLoading() ? 'Loading blocks...' : 'No blocks loaded.' }}</td>
+            <td colspan="7">{{ isLoading() ? 'Carregando blocos...' : 'Nenhum bloco carregado.' }}</td>
           </tr>
         }
       </tbody>
@@ -50,10 +50,10 @@
 
   @if (pageData(); as page) {
     <div class="pagination">
-      <span>Page {{ page.page + 1 }} of {{ page.totalPages || 1 }} · {{ page.totalElements }} blocks</span>
+      <span>Página {{ page.page + 1 }} de {{ page.totalPages || 1 }} · {{ page.totalElements }} blocos</span>
       <div class="pagination-actions">
-        <button class="secondary-action" type="button" (click)="load(page.page - 1)" [disabled]="page.first || isLoading()">Previous</button>
-        <button class="secondary-action" type="button" (click)="load(page.page + 1)" [disabled]="page.last || isLoading()">Next</button>
+        <button class="secondary-action" type="button" (click)="load(page.page - 1)" [disabled]="page.first || isLoading()">Anterior</button>
+        <button class="secondary-action" type="button" (click)="load(page.page + 1)" [disabled]="page.last || isLoading()">Próxima</button>
       </div>
     </div>
   }

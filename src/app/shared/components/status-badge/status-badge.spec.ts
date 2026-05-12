@@ -18,7 +18,7 @@ describe('StatusBadge', () => {
 
     const badge = (fixture.nativeElement as HTMLElement).querySelector('.badge');
     expect(fixture.componentInstance).toBeTruthy();
-    expect(badge?.textContent).toContain('MINED');
+    expect(badge?.textContent).toContain('Minerada');
     expect(badge?.classList.contains('gold')).toBe(true);
   });
 

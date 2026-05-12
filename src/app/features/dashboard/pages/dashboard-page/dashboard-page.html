@@ -1,15 +1,15 @@
 <section class="dashboard-page page-layout">
   <app-page-header
-    eyebrow="Financial processing ledger"
-    title="Audit and integrity overview"
-    description="Track tamper-evident financial events from ingestion to approval."
+    eyebrow="Ledger de processamento financeiro"
+    title="Painel de auditoria e integridade"
+    description="Acompanhe eventos financeiros resistentes a adulterações, da ingestão à aprovação."
   >
-    <a class="primary-action" routerLink="/event/create">Create event</a>
+    <a class="primary-action" routerLink="/event/create">Criar evento</a>
     <button class="secondary-action" type="button" (click)="validate()" [disabled]="isValidating()">
       @if (isValidating()) {
-        Validating...
+        Validando...
       } @else {
-        Validate ledger
+        Validar ledger
       }
     </button>
   </app-page-header>
@@ -21,18 +21,18 @@
   @if (status(); as currentStatus) {
     <div class="metric-grid">
       <app-metric-card
-        label="Integrity"
-        [value]="currentStatus.valid ? 'Validated' : 'Attention required'"
+        label="Integridade"
+        [value]="currentStatus.valid ? 'Validado' : 'Atenção necessária'"
         [tone]="currentStatus.valid ? 'success' : 'danger'"
       />
-      <app-metric-card label="Blocks" [value]="currentStatus.blocksCount" />
-      <app-metric-card label="Mined events" [value]="currentStatus.minedTransactions" tone="gold" />
-      <app-metric-card label="Pending events" [value]="currentStatus.pendingTransactions" />
+      <app-metric-card label="Blocos" [value]="currentStatus.blocksCount" />
+      <app-metric-card label="Eventos minerados" [value]="currentStatus.minedTransactions" tone="gold" />
+      <app-metric-card label="Eventos pendentes" [value]="currentStatus.pendingTransactions" />
     </div>
 
     <app-section-card class="latest-block">
       <div>
-        <span class="detail-label">Latest block</span>
+        <span class="detail-label">Bloco mais recente</span>
         <strong>#{{ currentStatus.latestBlockIndex ?? '-' }}</strong>
       </div>
       <div>
@@ -40,17 +40,17 @@
         <app-hash-value [value]="currentStatus.latestBlockHash" />
       </div>
       <div>
-        <span class="detail-label">Last mined</span>
+        <span class="detail-label">Última mineração</span>
         <strong>{{ formatDate(currentStatus.lastMinedAt) }}</strong>
       </div>
-      <a class="secondary-action" routerLink="/block">Open blocks</a>
+      <a class="secondary-action" routerLink="/block">Abrir blocos</a>
     </app-section-card>
   } @else {
     <div class="empty-state">
       @if (isLoading()) {
-        Loading ledger status...
+        Carregando status do ledger...
       } @else {
-        Ledger status is not available.
+        Status do ledger indisponível.
       }
     </div>
   }
@@ -58,19 +58,19 @@
   @if (validation(); as result) {
     <app-section-card class="validation-result" [tone]="result.valid ? 'accent' : 'danger'">
       <div>
-        <span class="detail-label">Integrity check</span>
-        <strong>{{ result.valid ? 'Chain is valid' : result.reason }}</strong>
+        <span class="detail-label">Verificação de integridade</span>
+        <strong>{{ result.valid ? 'A blockchain está íntegra' : validationReason(result.reason) }}</strong>
       </div>
       <div>
-        <span class="detail-label">Blocks checked</span>
+        <span class="detail-label">Blocos verificados</span>
         <strong>{{ result.blocksChecked }}</strong>
       </div>
       <div>
-        <span class="detail-label">Events checked</span>
+        <span class="detail-label">Eventos verificados</span>
         <strong>{{ result.transactionsChecked }}</strong>
       </div>
       <div>
-        <span class="detail-label">Broken transaction</span>
+        <span class="detail-label">Transação com falha</span>
         <app-hash-value [value]="result.brokenAtTransaction" />
       </div>
     </app-section-card>

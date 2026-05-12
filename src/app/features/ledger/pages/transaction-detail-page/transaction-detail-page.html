@@ -1,12 +1,12 @@
 <section class="transaction-detail-page page-layout">
-  <a class="back-link" routerLink="/ledger">Back to ledger</a>
+  <a class="back-link" routerLink="/ledger">Voltar para o ledger</a>
 
   @if (errorMessage()) {
     <p class="message error">{{ errorMessage() }}</p>
   }
 
   @if (transaction(); as item) {
-    <app-page-header eyebrow="Financial event" [title]="label(item.type)" [description]="item.type">
+    <app-page-header eyebrow="Evento financeiro" [title]="label(item.type)" description="Evento registrado no ledger financeiro">
       <app-status-badge [status]="item.status" />
     </app-page-header>
 
@@ -14,19 +14,19 @@
       <app-section-card label="Hash">
         <app-hash-value [value]="item.hash" [head]="24" [tail]="18" />
       </app-section-card>
-      <app-section-card label="Block">
+      <app-section-card label="Bloco">
         <strong>{{ item.blockId ?? '-' }}</strong>
       </app-section-card>
-      <app-section-card label="Block transaction index">
+      <app-section-card label="Índice da transação no bloco">
         <strong>{{ item.blockTransactionIndex ?? '-' }}</strong>
       </app-section-card>
       <app-section-card label="Nonce">
         <strong>{{ item.nonce }}</strong>
       </app-section-card>
-      <app-section-card label="Created at">
+      <app-section-card label="Criada em">
         <strong>{{ formatDate(item.createdAt) }}</strong>
       </app-section-card>
-      <app-section-card label="Mined at">
+      <app-section-card label="Minerada em">
         <strong>{{ formatDate(item.minedAt) }}</strong>
       </app-section-card>
     </section>
@@ -35,14 +35,14 @@
       <app-json-preview label="Payload" [value]="item.payload" />
     </app-section-card>
 
-    <app-section-card label="Public key">
+    <app-section-card label="Chave pública">
       <app-hash-value [value]="item.publicKey" [head]="24" [tail]="18" />
     </app-section-card>
 
-    <app-section-card label="Signature">
+    <app-section-card label="Assinatura">
       <app-hash-value [value]="item.signature" [head]="24" [tail]="18" />
     </app-section-card>
   } @else {
-    <div class="empty-state">{{ isLoading() ? 'Loading transaction...' : 'Transaction not loaded.' }}</div>
+    <div class="empty-state">{{ isLoading() ? 'Carregando transação...' : 'Transação não carregada.' }}</div>
   }
 </section>

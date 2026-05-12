@@ -49,7 +49,7 @@ describe('CreateTransactionPage', () => {
 
   it('should render the empty wallet state', () => {
     const element = fixture.nativeElement as HTMLElement;
-    expect(element.textContent).toContain('Register auditable processing evidence');
-    expect(element.textContent).toContain('No local wallet found');
+    expect(element.textContent).toContain('Registrar evidência auditável de processamento');
+    expect(element.textContent).toContain('Nenhuma carteira local encontrada');
   });
 });

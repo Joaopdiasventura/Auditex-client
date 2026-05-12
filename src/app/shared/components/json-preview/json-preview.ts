@@ -26,7 +26,7 @@ import { formatJson } from '../../utils/format';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class JsonPreview {
-  readonly label = input('Payload preview');
+  readonly label = input('Prévia do payload');
   readonly value = input<unknown>(null);
 
   protected readonly display = computed(() => formatJson(this.value()));

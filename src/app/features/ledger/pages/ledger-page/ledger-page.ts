@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
-  FINANCIAL_EVENT_LABELS,
   FINANCIAL_EVENT_TYPES,
-  FinancialEventType,
+  financialEventLabel,
 } from '../../../../core/models/financial-event/financial-event-type';
 import { PageResponse } from '../../../../core/models/page/page-response';
 import { Transaction } from '../../../../core/models/transaction/transaction';
@@ -56,7 +55,7 @@ export class LedgerPage implements OnInit {
         this.isLoading.set(false);
       },
       error: () => {
-        this.errorMessage.set('Unable to load financial ledger events');
+        this.errorMessage.set('Não foi possível carregar os eventos do ledger financeiro');
         this.isLoading.set(false);
       },
     });
@@ -86,7 +85,7 @@ export class LedgerPage implements OnInit {
   }
 
   protected label(type: string): string {
-    return FINANCIAL_EVENT_LABELS[type as FinancialEventType] ?? type;
+    return financialEventLabel(type);
   }
 
   protected short(value: string | null): string {

@@ -1,21 +1,21 @@
 <section class="create-event-page page-layout">
   <app-page-header
-    eyebrow="Create financial event"
-    title="Register auditable processing evidence"
-    description="Sign a financial processing event locally and submit it to the immutable ledger."
+    eyebrow="Criar evento financeiro"
+    title="Registrar evidência auditável de processamento"
+    description="Assine localmente um evento de processamento financeiro e envie ao ledger imutável."
   >
-    <a class="secondary-action" routerLink="/ledger">Open ledger</a>
+    <a class="secondary-action" routerLink="/ledger">Abrir ledger</a>
   </app-page-header>
 
   @if (wallets().length === 0) {
-    <app-empty-state title="No local wallet found" message="Create or import a wallet before registering financial events.">
-      <a class="primary-action" routerLink="/wallet/create">Create wallet</a>
+    <app-empty-state title="Nenhuma carteira local encontrada" message="Crie ou importe uma carteira antes de registrar eventos financeiros.">
+      <a class="primary-action" routerLink="/wallet/create">Criar carteira</a>
     </app-empty-state>
   } @else {
     <form class="form-grid" (submit)="submit(); $event.preventDefault()">
-      <app-section-card title="Financial data">
+      <app-section-card title="Dados financeiros">
         <label>
-          <span>File name</span>
+          <span>Nome do arquivo</span>
           <input
             class="form-control"
             type="text"
@@ -25,7 +25,7 @@
         </label>
 
         <label>
-          <span>Records count</span>
+          <span>Quantidade de registros</span>
           <input
             class="form-control"
             type="number"
@@ -35,7 +35,7 @@
         </label>
 
         <label>
-          <span>Records processed</span>
+          <span>Registros processados</span>
           <input
             class="form-control"
             type="number"
@@ -45,7 +45,7 @@
         </label>
 
         <label>
-          <span>Total amount</span>
+          <span>Valor total</span>
           <input
             class="form-control"
             type="number"
@@ -56,7 +56,7 @@
         </label>
 
         <label>
-          <span>Currency</span>
+          <span>Moeda</span>
           <input
             class="form-control"
             type="text"
@@ -66,7 +66,7 @@
         </label>
 
         <label>
-          <span>Source</span>
+          <span>Origem</span>
           <input
             class="form-control"
             type="text"
@@ -76,9 +76,9 @@
         </label>
       </app-section-card>
 
-      <app-section-card title="Validation outcome">
+      <app-section-card title="Resultado da validação">
         <label>
-          <span>Divergence type</span>
+          <span>Tipo de divergência</span>
           <input
             class="form-control"
             type="text"
@@ -88,7 +88,7 @@
         </label>
 
         <label>
-          <span>Expected amount</span>
+          <span>Valor esperado</span>
           <input
             class="form-control"
             type="number"
@@ -99,7 +99,7 @@
         </label>
 
         <label>
-          <span>Actual amount</span>
+          <span>Valor encontrado</span>
           <input
             class="form-control"
             type="number"
@@ -110,7 +110,7 @@
         </label>
 
         <label>
-          <span>Affected records</span>
+          <span>Registros afetados</span>
           <input
             class="form-control"
             type="number"
@@ -120,7 +120,7 @@
         </label>
 
         <label>
-          <span>Divergences found</span>
+          <span>Divergências encontradas</span>
           <input
             class="form-control"
             type="number"
@@ -130,7 +130,7 @@
         </label>
 
         <label>
-          <span>Duration ms</span>
+          <span>Duração em ms</span>
           <input
             class="form-control"
             type="number"
@@ -149,9 +149,9 @@
           />
         </label>
       </app-section-card>
-      <app-section-card title="Event identity">
+      <app-section-card title="Identidade do evento">
         <label>
-          <span>Wallet</span>
+          <span>Carteira</span>
           <select
             class="form-control"
             [value]="selectedAddress()"
@@ -166,7 +166,7 @@
         </label>
 
         <label>
-          <span>Event type</span>
+          <span>Tipo de evento</span>
           <select class="form-control" [value]="form().type" (change)="updateField('type', $any($event.target).value)">
             @for (type of eventTypes; track type) {
               <option [value]="type">{{ labels[type] }}</option>
@@ -175,7 +175,7 @@
         </label>
 
         <label>
-          <span>Processing ID</span>
+          <span>ID do processamento</span>
           <div class="inline-field">
             <input
               class="form-control"
@@ -183,12 +183,12 @@
               [value]="form().processingId"
               (input)="updateField('processingId', $any($event.target).value)"
             />
-            <button class="secondary-action" type="button" (click)="regenerateProcessingId()">New</button>
+            <button class="secondary-action" type="button" (click)="regenerateProcessingId()">Novo</button>
           </div>
         </label>
 
         <label>
-          <span>File hash</span>
+          <span>Hash do arquivo</span>
           <input
             class="form-control"
             type="text"
@@ -198,9 +198,9 @@
         </label>
       </app-section-card>
 
-      <app-section-card title="Signature">
+      <app-section-card title="Assinatura">
         <label>
-          <span>Local wallet password</span>
+          <span>Senha da carteira local</span>
           <input
             class="form-control"
             type="password"
@@ -221,16 +221,16 @@
 
         @if (transactionHash()) {
           <div class="result">
-            <span>Transaction hash</span>
+            <span>Hash da transação</span>
             <app-hash-value [value]="transactionHash()" [head]="24" [tail]="18" />
           </div>
         }
 
         <button class="primary-action submit" type="submit" [disabled]="isLoading()">
           @if (isLoading()) {
-            Signing...
+            Assinando...
           } @else {
-            Sign and submit event
+            Assinar e enviar evento
           }
         </button>
       </app-section-card>

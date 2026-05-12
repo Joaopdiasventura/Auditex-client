@@ -35,7 +35,7 @@ export class BlockListPage implements OnInit {
         this.isLoading.set(false);
       },
       error: () => {
-        this.errorMessage.set('Unable to load blocks');
+        this.errorMessage.set('Não foi possível carregar os blocos');
         this.isLoading.set(false);
       },
     });

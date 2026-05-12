@@ -33,9 +33,9 @@ describe('LedgerPage', () => {
   it('should create and render transaction rows', () => {
     const element = fixture.nativeElement as HTMLElement;
     expect(fixture.componentInstance).toBeTruthy();
-    expect(element.textContent).toContain('Auditable financial events');
-    expect(element.textContent).toContain('Billing file received');
-    expect(element.textContent).toContain('MINED');
+    expect(element.textContent).toContain('Eventos financeiros auditáveis');
+    expect(element.textContent).toContain('Arquivo de faturamento recebido');
+    expect(element.textContent).toContain('Minerada');
   });
 
   it('should apply type filters', () => {
@@ -56,7 +56,7 @@ describe('LedgerPage', () => {
     errorFixture.detectChanges();
     await errorFixture.whenStable();
 
-    expect((errorFixture.nativeElement as HTMLElement).textContent).toContain('Unable to load financial ledger events');
+    expect((errorFixture.nativeElement as HTMLElement).textContent).toContain('Não foi possível carregar os eventos do ledger financeiro');
   });
 });
 

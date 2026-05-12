@@ -1,15 +1,19 @@
 export const FINANCIAL_EVENT_LABELS = {
-  BILLING_FILE_RECEIVED: 'Billing file received',
-  BILLING_FILE_VALIDATED: 'Billing file validated',
-  BILLING_PROCESSING_STARTED: 'Billing processing started',
-  BILLING_PROCESSING_FINISHED: 'Billing processing finished',
-  BILLING_CHARGE_CALCULATED: 'Billing charge calculated',
-  BILLING_DIVERGENCE_DETECTED: 'Billing divergence detected',
-  BILLING_BATCH_APPROVED: 'Billing batch approved',
-  BILLING_BATCH_REJECTED: 'Billing batch rejected',
-  BILLING_REPORT_EXPORTED: 'Billing report exported',
+  BILLING_FILE_RECEIVED: 'Arquivo de faturamento recebido',
+  BILLING_FILE_VALIDATED: 'Arquivo de faturamento validado',
+  BILLING_PROCESSING_STARTED: 'Processamento iniciado',
+  BILLING_PROCESSING_FINISHED: 'Processamento finalizado',
+  BILLING_CHARGE_CALCULATED: 'Cobrança calculada',
+  BILLING_DIVERGENCE_DETECTED: 'Divergência detectada',
+  BILLING_BATCH_APPROVED: 'Lote aprovado',
+  BILLING_BATCH_REJECTED: 'Lote rejeitado',
+  BILLING_REPORT_EXPORTED: 'Relatório exportado',
 } as const;
 
 export type FinancialEventType = keyof typeof FINANCIAL_EVENT_LABELS;
 
 export const FINANCIAL_EVENT_TYPES = Object.keys(FINANCIAL_EVENT_LABELS) as FinancialEventType[];
+
+export function financialEventLabel(type: string): string {
+  return FINANCIAL_EVENT_LABELS[type as FinancialEventType] ?? 'Tipo de evento desconhecido';
+}

@@ -95,19 +95,19 @@ export class CreateTransactionPage implements OnInit {
     const wallet = this.wallets().find((item) => item.address === this.selectedAddress());
 
     if (!wallet) {
-      this.errorMessage.set('Select a local wallet');
+      this.errorMessage.set('Selecione uma carteira local');
       return;
     }
 
     const form = this.form();
 
     if (!form.processingId.trim() || !form.fileHash.trim()) {
-      this.errorMessage.set('Processing ID and file hash are required');
+      this.errorMessage.set('ID do processamento e hash do arquivo são obrigatórios');
       return;
     }
 
     if (!form.password.trim()) {
-      this.errorMessage.set('Enter the local wallet password');
+      this.errorMessage.set('Digite a senha da carteira local');
       return;
     }
 
@@ -132,7 +132,7 @@ export class CreateTransactionPage implements OnInit {
         .subscribe({
           next: (transaction) => {
             this.transactionHash.set(transaction.hash);
-            this.successMessage.set('Financial event signed and submitted to the ledger');
+            this.successMessage.set('Evento financeiro assinado e enviado ao ledger');
             this.form.update((current) => ({
               ...current,
               password: '',
@@ -140,12 +140,12 @@ export class CreateTransactionPage implements OnInit {
             this.isLoading.set(false);
           },
           error: () => {
-            this.errorMessage.set('Unable to create financial event');
+            this.errorMessage.set('Não foi possível criar o evento financeiro');
             this.isLoading.set(false);
           },
         });
     } catch {
-      this.errorMessage.set('Invalid password or corrupted local wallet');
+      this.errorMessage.set('Senha inválida ou carteira local corrompida');
       this.isLoading.set(false);
     }
   }

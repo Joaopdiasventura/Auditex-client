@@ -47,8 +47,8 @@ describe('DashboardPage', () => {
   it('should create and render ledger status', () => {
     const element = fixture.nativeElement as HTMLElement;
     expect(fixture.componentInstance).toBeTruthy();
-    expect(element.textContent).toContain('Audit and integrity overview');
-    expect(element.textContent).toContain('Validated');
+    expect(element.textContent).toContain('Painel de auditoria e integridade');
+    expect(element.textContent).toContain('Validado');
     expect(element.textContent).toContain('10');
   });
 
@@ -58,7 +58,7 @@ describe('DashboardPage', () => {
     fixture.detectChanges();
 
     expect(ledgerService.validate).toHaveBeenCalled();
-    expect((fixture.nativeElement as HTMLElement).textContent).toContain('Chain is valid');
+    expect((fixture.nativeElement as HTMLElement).textContent).toContain('A blockchain está íntegra');
   });
 
   it('should render loading fallback when status is unavailable', async () => {
@@ -67,6 +67,6 @@ describe('DashboardPage', () => {
     errorFixture.detectChanges();
     await errorFixture.whenStable();
 
-    expect((errorFixture.nativeElement as HTMLElement).textContent).toContain('Unable to load ledger status');
+    expect((errorFixture.nativeElement as HTMLElement).textContent).toContain('Não foi possível carregar o status do ledger');
   });
 });

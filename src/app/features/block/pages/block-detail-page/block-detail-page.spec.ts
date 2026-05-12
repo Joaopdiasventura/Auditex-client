@@ -31,8 +31,8 @@ describe('BlockDetailPage', () => {
   it('should create and render block details', () => {
     const element = fixture.nativeElement as HTMLElement;
     expect(fixture.componentInstance).toBeTruthy();
-    expect(element.textContent).toContain('Block #1');
-    expect(element.textContent).toContain('Billing file received');
+    expect(element.textContent).toContain('Bloco #1');
+    expect(element.textContent).toContain('Arquivo de faturamento recebido');
     expect(blockService.transactions).toHaveBeenCalledWith('block-1', 0, 50);
   });
 
@@ -42,7 +42,7 @@ describe('BlockDetailPage', () => {
     errorFixture.detectChanges();
     await errorFixture.whenStable();
 
-    expect((errorFixture.nativeElement as HTMLElement).textContent).toContain('Unable to load block');
+    expect((errorFixture.nativeElement as HTMLElement).textContent).toContain('Não foi possível carregar o bloco');
   });
 });
 

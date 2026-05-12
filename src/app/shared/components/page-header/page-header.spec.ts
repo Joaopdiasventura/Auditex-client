@@ -11,8 +11,8 @@ describe('PageHeader', () => {
 
     fixture = TestBed.createComponent(PageHeader);
     fixture.componentRef.setInput('eyebrow', 'Ledger');
-    fixture.componentRef.setInput('title', 'Audit overview');
-    fixture.componentRef.setInput('description', 'Track integrity');
+    fixture.componentRef.setInput('title', 'Visão da auditoria');
+    fixture.componentRef.setInput('description', 'Acompanhe a integridade');
     fixture.detectChanges();
   });
 
@@ -20,7 +20,7 @@ describe('PageHeader', () => {
     expect(fixture.componentInstance).toBeTruthy();
     const element = fixture.nativeElement as HTMLElement;
     expect(element.textContent).toContain('Ledger');
-    expect(element.querySelector('h1')?.textContent).toContain('Audit overview');
-    expect(element.textContent).toContain('Track integrity');
+    expect(element.querySelector('h1')?.textContent).toContain('Visão da auditoria');
+    expect(element.textContent).toContain('Acompanhe a integridade');
   });
 });

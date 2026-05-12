@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { statusLabel } from '../../utils/status-label';
 
 @Component({
   selector: 'app-status-badge',
@@ -59,10 +60,10 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 export class StatusBadge {
   readonly status = input.required<string | null | undefined>();
 
-  protected readonly label = computed(() => this.status() ?? 'PENDING');
+  protected readonly label = computed(() => statusLabel(this.status()));
 
   protected readonly tone = computed(() => {
-    const status = this.label().toUpperCase();
+    const status = this.status()?.toUpperCase() ?? 'PENDING';
     if (['MINED', 'VALIDATED', 'APPROVED'].includes(status)) return 'gold';
     if (['COMPLETED', 'SUCCESS'].includes(status)) return 'success';
     if (['REJECTED', 'FAILED', 'ERROR', 'INVALID'].includes(status)) return 'danger';
