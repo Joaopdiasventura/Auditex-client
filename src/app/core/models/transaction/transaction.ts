@@ -12,4 +12,5 @@ export interface Transaction {
   createdAt: string;
   minedAt: string | null;
   blockId: string | null;
+  blockTransactionIndex: number | null;
 }

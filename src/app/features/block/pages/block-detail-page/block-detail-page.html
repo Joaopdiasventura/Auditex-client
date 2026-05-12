@@ -1,0 +1,79 @@
+<section class="block-detail-page page-layout">
+  <a class="back-link" routerLink="/block">Back to blocks</a>
+
+  @if (errorMessage()) {
+    <p class="message error">{{ errorMessage() }}</p>
+  }
+
+  @if (data(); as current) {
+    <app-page-header
+      eyebrow="Block detail"
+      [title]="'Block #' + current.block.index"
+      [description]="current.block.transactionsCount + ' financial events sealed in this block.'"
+    >
+      <app-status-badge [status]="'Difficulty ' + current.block.difficulty" />
+    </app-page-header>
+
+    <section class="detail-grid">
+      <app-section-card label="Hash">
+        <app-hash-value [value]="current.block.hash" [head]="24" [tail]="18" />
+      </app-section-card>
+      <app-section-card label="Previous hash">
+        <app-hash-value [value]="current.block.previousHash" [head]="24" [tail]="18" />
+      </app-section-card>
+      <app-section-card label="Merkle Root">
+        <app-hash-value [value]="current.block.merkleRoot" [head]="24" [tail]="18" />
+      </app-section-card>
+      <app-section-card label="Nonce">
+        <strong>{{ current.block.nonce }}</strong>
+      </app-section-card>
+      <app-section-card label="Mined at">
+        <strong>{{ formatDate(current.block.minedAt) }}</strong>
+      </app-section-card>
+      <app-section-card label="Created at">
+        <strong>{{ formatDate(current.block.createdAt) }}</strong>
+      </app-section-card>
+    </section>
+
+    <section class="table-shell">
+      <table>
+        <thead>
+          <tr>
+            <th>Index</th>
+            <th>Event</th>
+            <th>Status</th>
+            <th>Hash</th>
+            <th>Mined at</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (transaction of current.transactions.content; track transaction.id) {
+            <tr>
+              <td>{{ transaction.blockTransactionIndex }}</td>
+              <td><a [routerLink]="['/ledger/transaction', transaction.hash]">{{ label(transaction.type) }}</a></td>
+              <td><app-status-badge [status]="transaction.status" /></td>
+              <td><app-hash-value [value]="transaction.hash" /></td>
+              <td>{{ formatDate(transaction.minedAt) }}</td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="5">No transactions found in this block.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </section>
+
+    <div class="pagination">
+      <span>
+        Page {{ current.transactions.page + 1 }} of {{ current.transactions.totalPages || 1 }}
+      </span>
+      <div class="pagination-actions">
+        <button class="secondary-action" type="button" (click)="load(current.transactions.page - 1)" [disabled]="current.transactions.first || isLoading()">Previous</button>
+        <button class="secondary-action" type="button" (click)="load(current.transactions.page + 1)" [disabled]="current.transactions.last || isLoading()">Next</button>
+      </div>
+    </div>
+  } @else {
+    <div class="empty-state">{{ isLoading() ? 'Loading block...' : 'Block not loaded.' }}</div>
+  }
+</section>

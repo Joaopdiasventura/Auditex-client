@@ -1,89 +1,239 @@
-<section class="create-transaction-page">
-  <div class="header">
-    <p class="eyebrow">Auditex Ledger</p>
-    <h1>Criar transação</h1>
-    <p>
-      Selecione uma carteira local, desbloqueie com sua senha e assine a transação no navegador.
-    </p>
-  </div>
+<section class="create-event-page page-layout">
+  <app-page-header
+    eyebrow="Create financial event"
+    title="Register auditable processing evidence"
+    description="Sign a financial processing event locally and submit it to the immutable ledger."
+  >
+    <a class="secondary-action" routerLink="/ledger">Open ledger</a>
+  </app-page-header>
 
   @if (wallets().length === 0) {
-    <div class="empty-state">
-      <h2>Nenhuma carteira encontrada</h2>
-      <p>Crie ou importe uma carteira antes de criar transações.</p>
-    </div>
+    <app-empty-state title="No local wallet found" message="Create or import a wallet before registering financial events.">
+      <a class="primary-action" routerLink="/wallet/create">Create wallet</a>
+    </app-empty-state>
   } @else {
-    <form class="form" (submit)="submit(); $event.preventDefault()">
-      <label class="field">
-        <span>Carteira</span>
+    <form class="form-grid" (submit)="submit(); $event.preventDefault()">
+      <app-section-card title="Financial data">
+        <label>
+          <span>File name</span>
+          <input
+            class="form-control"
+            type="text"
+            [value]="form().fileName"
+            (input)="updateField('fileName', $any($event.target).value)"
+          />
+        </label>
 
-        <select
-          [value]="selectedAddress()"
-          (change)="updateSelectedAddress($any($event.target).value)"
-        >
-          @for (wallet of wallets(); track wallet.address) {
-            <option [value]="wallet.address">
-              {{ wallet.ownerName }} — {{ formatAddress(wallet.address) }}
-            </option>
-          }
-        </select>
-      </label>
+        <label>
+          <span>Records count</span>
+          <input
+            class="form-control"
+            type="number"
+            [value]="form().recordsCount"
+            (input)="updateField('recordsCount', $any($event.target).value)"
+          />
+        </label>
 
-      <label class="field">
-        <span>Tipo da transação</span>
+        <label>
+          <span>Records processed</span>
+          <input
+            class="form-control"
+            type="number"
+            [value]="form().recordsProcessed"
+            (input)="updateField('recordsProcessed', $any($event.target).value)"
+          />
+        </label>
 
-        <input
-          type="text"
-          [value]="createTransactionDto().type"
-          (input)="updateField('type', $any($event.target).value)"
-          placeholder="INVOICE_PAID"
-        />
-      </label>
+        <label>
+          <span>Total amount</span>
+          <input
+            class="form-control"
+            type="number"
+            step="0.01"
+            [value]="form().totalAmount"
+            (input)="updateField('totalAmount', $any($event.target).value)"
+          />
+        </label>
 
-      <label class="field">
-        <span>Payload JSON</span>
+        <label>
+          <span>Currency</span>
+          <input
+            class="form-control"
+            type="text"
+            [value]="form().currency"
+            (input)="updateField('currency', $any($event.target).value)"
+          />
+        </label>
 
-        <textarea
-          rows="9"
-          [value]="createTransactionDto().payload"
-          (input)="updateField('payload', $any($event.target).value)"
-          placeholder='{ "invoiceId": "INV-001", "amount": 1500.75, "currency": "BRL" }'
-        ></textarea>
-      </label>
+        <label>
+          <span>Source</span>
+          <input
+            class="form-control"
+            type="text"
+            [value]="form().source"
+            (input)="updateField('source', $any($event.target).value)"
+          />
+        </label>
+      </app-section-card>
 
-      <label class="field">
-        <span>Senha local da carteira</span>
+      <app-section-card title="Validation outcome">
+        <label>
+          <span>Divergence type</span>
+          <input
+            class="form-control"
+            type="text"
+            [value]="form().divergenceType"
+            (input)="updateField('divergenceType', $any($event.target).value)"
+          />
+        </label>
 
-        <input
-          type="password"
-          [value]="createTransactionDto().password"
-          (input)="updateField('password', $any($event.target).value)"
-          placeholder="Senha usada para proteger a private key"
-        />
-      </label>
+        <label>
+          <span>Expected amount</span>
+          <input
+            class="form-control"
+            type="number"
+            step="0.01"
+            [value]="form().expectedAmount"
+            (input)="updateField('expectedAmount', $any($event.target).value)"
+          />
+        </label>
 
-      @if (errorMessage()) {
-        <p class="message error">{{ errorMessage() }}</p>
-      }
+        <label>
+          <span>Actual amount</span>
+          <input
+            class="form-control"
+            type="number"
+            step="0.01"
+            [value]="form().actualAmount"
+            (input)="updateField('actualAmount', $any($event.target).value)"
+          />
+        </label>
 
-      @if (successMessage()) {
-        <p class="message success">{{ successMessage() }}</p>
-      }
+        <label>
+          <span>Affected records</span>
+          <input
+            class="form-control"
+            type="number"
+            [value]="form().affectedRecords"
+            (input)="updateField('affectedRecords', $any($event.target).value)"
+          />
+        </label>
 
-      @if (transactionHash()) {
-        <div class="result">
-          <span>Hash da transação</span>
-          <code>{{ transactionHash() }}</code>
-        </div>
-      }
+        <label>
+          <span>Divergences found</span>
+          <input
+            class="form-control"
+            type="number"
+            [value]="form().divergencesFound"
+            (input)="updateField('divergencesFound', $any($event.target).value)"
+          />
+        </label>
 
-      <button class="submit" type="submit" [disabled]="isLoading()">
-        @if (isLoading()) {
-          Assinando...
-        } @else {
-          Assinar e enviar transação
+        <label>
+          <span>Duration ms</span>
+          <input
+            class="form-control"
+            type="number"
+            [value]="form().durationMs"
+            (input)="updateField('durationMs', $any($event.target).value)"
+          />
+        </label>
+
+        <label>
+          <span>Status</span>
+          <input
+            class="form-control"
+            type="text"
+            [value]="form().status"
+            (input)="updateField('status', $any($event.target).value)"
+          />
+        </label>
+      </app-section-card>
+      <app-section-card title="Event identity">
+        <label>
+          <span>Wallet</span>
+          <select
+            class="form-control"
+            [value]="selectedAddress()"
+            (change)="updateSelectedAddress($any($event.target).value)"
+          >
+            @for (wallet of wallets(); track wallet.address) {
+              <option [value]="wallet.address">
+                {{ wallet.ownerName }} · {{ formatAddress(wallet.address) }}
+              </option>
+            }
+          </select>
+        </label>
+
+        <label>
+          <span>Event type</span>
+          <select class="form-control" [value]="form().type" (change)="updateField('type', $any($event.target).value)">
+            @for (type of eventTypes; track type) {
+              <option [value]="type">{{ labels[type] }}</option>
+            }
+          </select>
+        </label>
+
+        <label>
+          <span>Processing ID</span>
+          <div class="inline-field">
+            <input
+              class="form-control"
+              type="text"
+              [value]="form().processingId"
+              (input)="updateField('processingId', $any($event.target).value)"
+            />
+            <button class="secondary-action" type="button" (click)="regenerateProcessingId()">New</button>
+          </div>
+        </label>
+
+        <label>
+          <span>File hash</span>
+          <input
+            class="form-control"
+            type="text"
+            [value]="form().fileHash"
+            (input)="updateField('fileHash', $any($event.target).value)"
+          />
+        </label>
+      </app-section-card>
+
+      <app-section-card title="Signature">
+        <label>
+          <span>Local wallet password</span>
+          <input
+            class="form-control"
+            type="password"
+            [value]="form().password"
+            (input)="updateField('password', $any($event.target).value)"
+          />
+        </label>
+
+        <app-json-preview [value]="previewPayloadValue()" />
+
+        @if (errorMessage()) {
+          <p class="message error">{{ errorMessage() }}</p>
         }
-      </button>
+
+        @if (successMessage()) {
+          <p class="message success">{{ successMessage() }}</p>
+        }
+
+        @if (transactionHash()) {
+          <div class="result">
+            <span>Transaction hash</span>
+            <app-hash-value [value]="transactionHash()" [head]="24" [tail]="18" />
+          </div>
+        }
+
+        <button class="primary-action submit" type="submit" [disabled]="isLoading()">
+          @if (isLoading()) {
+            Signing...
+          } @else {
+            Sign and submit event
+          }
+        </button>
+      </app-section-card>
     </form>
   }
 </section>

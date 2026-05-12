@@ -1,41 +1,53 @@
-<section class="create-wallet">
-  <h1>Criar carteira</h1>
+<section class="create-wallet page-layout">
+  <app-page-header
+    eyebrow="Wallet Vault"
+    title="Criar carteira"
+    description="Gere uma carteira local para assinar eventos financeiros com chave privada criptografada."
+  />
 
-  <form (submit)="submit(); $event.preventDefault()">
-    <label>
-      Nome do proprietário
-      <input
-        type="text"
-        [value]="createWalletDto().ownerName"
-        (input)="createWalletDto.set({ ownerName: $any($event.target).value })"
-      />
-    </label>
+  <app-section-card class="wallet-form">
+    <form (submit)="submit(); $event.preventDefault()">
+      <label>
+        <span>Nome do proprietário</span>
+        <input
+          class="form-control"
+          type="text"
+          [value]="createWalletDto().ownerName"
+          (input)="createWalletDto.set({ ownerName: $any($event.target).value })"
+        />
+      </label>
 
-    <button type="submit" [disabled]="isLoading()">Criar carteira</button>
-  </form>
+      <button class="primary-action" type="submit" [disabled]="isLoading()">Criar carteira</button>
+    </form>
+  </app-section-card>
 
   @if (errorMessage()) {
-    <p>{{ errorMessage() }}</p>
+    <p class="message error">{{ errorMessage() }}</p>
   }
 
   @if (createdWallet()) {
-    <section>
-      <h2>Carteira criada</h2>
+    <app-section-card class="wallet-result" title="Carteira criada">
+      <label>
+        <span>Endereço</span>
+        <textarea class="form-control" readonly rows="3">{{ createdWallet()?.address }}</textarea>
+      </label>
 
-      <p>Endereço</p>
-      <textarea readonly>{{ createdWallet()?.address }}</textarea>
+      <label>
+        <span>Chave pública</span>
+        <textarea class="form-control" readonly rows="5">{{ createdWallet()?.publicKey }}</textarea>
+      </label>
 
-      <p>Chave pública</p>
-      <textarea readonly>{{ createdWallet()?.publicKey }}</textarea>
-
-      <p>Chave privada</p>
-      <textarea readonly>{{ createdWallet()?.privateKey }}</textarea>
+      <label>
+        <span>Chave privada</span>
+        <textarea class="form-control" readonly rows="5">{{ createdWallet()?.privateKey }}</textarea>
+      </label>
 
       <h3>Salvar no cofre local</h3>
 
       <label>
-        Senha local
+        <span>Senha local</span>
         <input
+          class="form-control"
           type="password"
           [value]="vaultPassword()"
           (input)="vaultPassword.set($any($event.target).value)"
@@ -43,21 +55,22 @@
       </label>
 
       <label>
-        Confirmar senha
+        <span>Confirmar senha</span>
         <input
+          class="form-control"
           type="password"
           [value]="confirmVaultPassword()"
           (input)="confirmVaultPassword.set($any($event.target).value)"
         />
       </label>
 
-      <button type="button" (click)="saveInVault()" [disabled]="isLoading()">
+      <button class="primary-action" type="button" (click)="saveInVault()" [disabled]="isLoading()">
         Salvar carteira criptografada
       </button>
 
       @if (vaultSaved()) {
-        <p>Carteira salva localmente com a chave privada criptografada.</p>
+        <p class="message success">Carteira salva localmente com a chave privada criptografada.</p>
       }
-    </section>
+    </app-section-card>
   }
 </section>

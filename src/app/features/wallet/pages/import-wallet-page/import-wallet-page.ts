@@ -1,6 +1,8 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { form, max, min, required } from '@angular/forms/signals';
 import { WalletVaultService } from '../../../../core/services/wallet-vault/wallet-vault.service';
+import { PageHeader } from '../../../../shared/components/page-header/page-header';
+import { SectionCard } from '../../../../shared/components/section-card/section-card';
 
 interface ImportWalletDto {
   ownerName: string;
@@ -13,9 +15,10 @@ interface ImportWalletDto {
 
 @Component({
   selector: 'app-import-wallet-page',
-  imports: [],
+  imports: [PageHeader, SectionCard],
   templateUrl: './import-wallet-page.html',
   styleUrl: './import-wallet-page.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ImportWalletPage {
   protected readonly isLoading = signal(false);

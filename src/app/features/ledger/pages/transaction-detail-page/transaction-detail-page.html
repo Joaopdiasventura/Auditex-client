@@ -1,0 +1,48 @@
+<section class="transaction-detail-page page-layout">
+  <a class="back-link" routerLink="/ledger">Back to ledger</a>
+
+  @if (errorMessage()) {
+    <p class="message error">{{ errorMessage() }}</p>
+  }
+
+  @if (transaction(); as item) {
+    <app-page-header eyebrow="Financial event" [title]="label(item.type)" [description]="item.type">
+      <app-status-badge [status]="item.status" />
+    </app-page-header>
+
+    <section class="detail-grid">
+      <app-section-card label="Hash">
+        <app-hash-value [value]="item.hash" [head]="24" [tail]="18" />
+      </app-section-card>
+      <app-section-card label="Block">
+        <strong>{{ item.blockId ?? '-' }}</strong>
+      </app-section-card>
+      <app-section-card label="Block transaction index">
+        <strong>{{ item.blockTransactionIndex ?? '-' }}</strong>
+      </app-section-card>
+      <app-section-card label="Nonce">
+        <strong>{{ item.nonce }}</strong>
+      </app-section-card>
+      <app-section-card label="Created at">
+        <strong>{{ formatDate(item.createdAt) }}</strong>
+      </app-section-card>
+      <app-section-card label="Mined at">
+        <strong>{{ formatDate(item.minedAt) }}</strong>
+      </app-section-card>
+    </section>
+
+    <app-section-card>
+      <app-json-preview label="Payload" [value]="item.payload" />
+    </app-section-card>
+
+    <app-section-card label="Public key">
+      <app-hash-value [value]="item.publicKey" [head]="24" [tail]="18" />
+    </app-section-card>
+
+    <app-section-card label="Signature">
+      <app-hash-value [value]="item.signature" [head]="24" [tail]="18" />
+    </app-section-card>
+  } @else {
+    <div class="empty-state">{{ isLoading() ? 'Loading transaction...' : 'Transaction not loaded.' }}</div>
+  }
+</section>

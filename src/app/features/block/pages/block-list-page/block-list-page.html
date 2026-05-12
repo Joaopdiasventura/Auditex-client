@@ -1,0 +1,60 @@
+<section class="block-list-page page-layout">
+  <app-page-header
+    eyebrow="Blocks explorer"
+    title="Immutable settlement blocks"
+    description="Review block hashes, proof-of-work and event counts."
+  />
+
+  @if (errorMessage()) {
+    <p class="message error">{{ errorMessage() }}</p>
+  }
+
+  <section class="table-shell">
+    <table>
+      <thead>
+        <tr>
+          <th>Index</th>
+          <th>Hash</th>
+          <th>Previous hash</th>
+          <th>Difficulty</th>
+          <th>Nonce</th>
+          <th>Events</th>
+          <th>Mined at</th>
+        </tr>
+      </thead>
+      <tbody>
+        @if (pageData(); as page) {
+          @for (block of page.content; track block.id) {
+            <tr>
+              <td><a [routerLink]="['/block', block.id]">#{{ block.index }}</a></td>
+              <td><app-hash-value [value]="block.hash" /></td>
+              <td><app-hash-value [value]="block.previousHash" /></td>
+              <td>{{ block.difficulty }}</td>
+              <td>{{ block.nonce }}</td>
+              <td>{{ block.transactionsCount }}</td>
+              <td>{{ formatDate(block.minedAt) }}</td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="7">No blocks found.</td>
+            </tr>
+          }
+        } @else {
+          <tr>
+            <td colspan="7">{{ isLoading() ? 'Loading blocks...' : 'No blocks loaded.' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
+
+  @if (pageData(); as page) {
+    <div class="pagination">
+      <span>Page {{ page.page + 1 }} of {{ page.totalPages || 1 }} · {{ page.totalElements }} blocks</span>
+      <div class="pagination-actions">
+        <button class="secondary-action" type="button" (click)="load(page.page - 1)" [disabled]="page.first || isLoading()">Previous</button>
+        <button class="secondary-action" type="button" (click)="load(page.page + 1)" [disabled]="page.last || isLoading()">Next</button>
+      </div>
+    </div>
+  }
+</section>

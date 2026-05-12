@@ -1,15 +1,18 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { CreateWalletDto } from '../../dto/create-wallet-dto';
 import { form, max, min } from '@angular/forms/signals';
 import { WalletService } from '../../../../core/services/wallet/wallet.service';
 import { ReturnWalletDto } from '../../dto/return-wallet-dto';
 import { WalletVaultService } from '../../../../core/services/wallet-vault/wallet-vault.service';
+import { PageHeader } from '../../../../shared/components/page-header/page-header';
+import { SectionCard } from '../../../../shared/components/section-card/section-card';
 
 @Component({
   selector: 'app-create-wallet-page',
-  imports: [],
+  imports: [PageHeader, SectionCard],
   templateUrl: './create-wallet-page.html',
   styleUrl: './create-wallet-page.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateWalletPage {
   protected readonly isLoading = signal(false);

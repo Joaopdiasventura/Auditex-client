@@ -1,0 +1,34 @@
+.wallet-form,
+.wallet-result {
+  max-width: 760px;
+}
+
+.wallet-result {
+  max-width: 980px;
+}
+
+form {
+  display: grid;
+  gap: 14px;
+}
+
+h2,
+h3 {
+  margin: 0;
+}
+
+label {
+  display: grid;
+  gap: 8px;
+}
+
+label span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+textarea {
+  resize: vertical;
+}

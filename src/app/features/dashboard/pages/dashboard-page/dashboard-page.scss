@@ -1,0 +1,37 @@
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.latest-block,
+.validation-result {
+  display: block;
+}
+
+.latest-block ::ng-deep .content,
+.validation-result ::ng-deep .content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.latest-block div,
+.validation-result div {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .metric-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .latest-block ::ng-deep .content,
+  .validation-result ::ng-deep .content {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

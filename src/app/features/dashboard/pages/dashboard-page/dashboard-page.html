@@ -1,0 +1,78 @@
+<section class="dashboard-page page-layout">
+  <app-page-header
+    eyebrow="Financial processing ledger"
+    title="Audit and integrity overview"
+    description="Track tamper-evident financial events from ingestion to approval."
+  >
+    <a class="primary-action" routerLink="/event/create">Create event</a>
+    <button class="secondary-action" type="button" (click)="validate()" [disabled]="isValidating()">
+      @if (isValidating()) {
+        Validating...
+      } @else {
+        Validate ledger
+      }
+    </button>
+  </app-page-header>
+
+  @if (errorMessage()) {
+    <p class="message error">{{ errorMessage() }}</p>
+  }
+
+  @if (status(); as currentStatus) {
+    <div class="metric-grid">
+      <app-metric-card
+        label="Integrity"
+        [value]="currentStatus.valid ? 'Validated' : 'Attention required'"
+        [tone]="currentStatus.valid ? 'success' : 'danger'"
+      />
+      <app-metric-card label="Blocks" [value]="currentStatus.blocksCount" />
+      <app-metric-card label="Mined events" [value]="currentStatus.minedTransactions" tone="gold" />
+      <app-metric-card label="Pending events" [value]="currentStatus.pendingTransactions" />
+    </div>
+
+    <app-section-card class="latest-block">
+      <div>
+        <span class="detail-label">Latest block</span>
+        <strong>#{{ currentStatus.latestBlockIndex ?? '-' }}</strong>
+      </div>
+      <div>
+        <span class="detail-label">Hash</span>
+        <app-hash-value [value]="currentStatus.latestBlockHash" />
+      </div>
+      <div>
+        <span class="detail-label">Last mined</span>
+        <strong>{{ formatDate(currentStatus.lastMinedAt) }}</strong>
+      </div>
+      <a class="secondary-action" routerLink="/block">Open blocks</a>
+    </app-section-card>
+  } @else {
+    <div class="empty-state">
+      @if (isLoading()) {
+        Loading ledger status...
+      } @else {
+        Ledger status is not available.
+      }
+    </div>
+  }
+
+  @if (validation(); as result) {
+    <app-section-card class="validation-result" [tone]="result.valid ? 'accent' : 'danger'">
+      <div>
+        <span class="detail-label">Integrity check</span>
+        <strong>{{ result.valid ? 'Chain is valid' : result.reason }}</strong>
+      </div>
+      <div>
+        <span class="detail-label">Blocks checked</span>
+        <strong>{{ result.blocksChecked }}</strong>
+      </div>
+      <div>
+        <span class="detail-label">Events checked</span>
+        <strong>{{ result.transactionsChecked }}</strong>
+      </div>
+      <div>
+        <span class="detail-label">Broken transaction</span>
+        <app-hash-value [value]="result.brokenAtTransaction" />
+      </div>
+    </app-section-card>
+  }
+</section>

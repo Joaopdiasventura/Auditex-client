@@ -44,7 +44,7 @@ export class WalletVaultService {
     return storedWallet;
   }
 
-  public async findAll(): Promise<StoredWallet[]> {
+  public async list(): Promise<StoredWallet[]> {
     const database = await this.openDatabase();
 
     const result = await new Promise<StoredWallet[]>((resolve, reject) => {

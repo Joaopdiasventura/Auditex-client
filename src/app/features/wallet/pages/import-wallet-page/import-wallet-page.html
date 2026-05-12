@@ -1,87 +1,95 @@
-<section class="import-wallet-page">
-  <div class="header">
-    <p class="eyebrow">Wallet Vault</p>
-    <h1>Importar carteira</h1>
-    <p>Importe uma carteira existente e salve a chave privada criptografada neste navegador.</p>
-  </div>
+<section class="import-wallet-page page-layout">
+  <app-page-header
+    eyebrow="Wallet Vault"
+    title="Importar carteira"
+    description="Importe uma carteira existente e salve a chave privada criptografada neste navegador."
+  />
 
-  <form class="form" (submit)="submit(); $event.preventDefault()">
-    <label class="field">
-      <span>Nome do proprietário</span>
-      <input
-        type="text"
-        [value]="importWalletDto().ownerName"
-        (input)="updateField('ownerName', $any($event.target).value)"
-        placeholder="João Dias"
-      />
-    </label>
-
-    <label class="field">
-      <span>Endereço</span>
-      <input
-        type="text"
-        [value]="importWalletDto().address"
-        (input)="updateField('address', $any($event.target).value)"
-        placeholder="AX-..."
-      />
-    </label>
-
-    <label class="field">
-      <span>Chave pública</span>
-      <textarea
-        [value]="importWalletDto().publicKey"
-        (input)="updateField('publicKey', $any($event.target).value)"
-        placeholder="MIIBIjANBgkqh..."
-        rows="5"
-      ></textarea>
-    </label>
-
-    <label class="field">
-      <span>Chave privada</span>
-      <textarea
-        [value]="importWalletDto().privateKey"
-        (input)="updateField('privateKey', $any($event.target).value)"
-        placeholder="MIIEvQIBADAN..."
-        rows="7"
-      ></textarea>
-    </label>
-
-    <div class="password-grid">
+  <app-section-card class="form">
+    <form (submit)="submit(); $event.preventDefault()">
       <label class="field">
-        <span>Senha local</span>
+        <span>Nome do proprietário</span>
         <input
-          type="password"
-          [value]="importWalletDto().password"
-          (input)="updateField('password', $any($event.target).value)"
-          placeholder="Mínimo 8 caracteres"
+          class="form-control"
+          type="text"
+          [value]="importWalletDto().ownerName"
+          (input)="updateField('ownerName', $any($event.target).value)"
+          placeholder="João Dias"
         />
       </label>
 
       <label class="field">
-        <span>Confirmar senha</span>
+        <span>Endereço</span>
         <input
-          type="password"
-          [value]="importWalletDto().confirmPassword"
-          (input)="updateField('confirmPassword', $any($event.target).value)"
-          placeholder="Repita a senha"
+          class="form-control"
+          type="text"
+          [value]="importWalletDto().address"
+          (input)="updateField('address', $any($event.target).value)"
+          placeholder="AX-..."
         />
       </label>
-    </div>
 
-    @if (errorMessage()) {
-      <p class="message error">{{ errorMessage() }}</p>
-    }
+      <label class="field">
+        <span>Chave pública</span>
+        <textarea
+          class="form-control"
+          [value]="importWalletDto().publicKey"
+          (input)="updateField('publicKey', $any($event.target).value)"
+          placeholder="MIIBIjANBgkqh..."
+          rows="5"
+        ></textarea>
+      </label>
 
-    @if (isSaved()) {
-      <p class="message success">Carteira importada e salva localmente com criptografia.</p>
-    }
+      <label class="field">
+        <span>Chave privada</span>
+        <textarea
+          class="form-control"
+          [value]="importWalletDto().privateKey"
+          (input)="updateField('privateKey', $any($event.target).value)"
+          placeholder="MIIEvQIBADAN..."
+          rows="7"
+        ></textarea>
+      </label>
 
-    <button class="submit" type="submit" [disabled]="isLoading()">
-      @if (isLoading()) {
-        Salvando...
-      } @else {
-        Importar carteira
+      <div class="password-grid">
+        <label class="field">
+          <span>Senha local</span>
+          <input
+            class="form-control"
+            type="password"
+            [value]="importWalletDto().password"
+            (input)="updateField('password', $any($event.target).value)"
+            placeholder="Mínimo 8 caracteres"
+          />
+        </label>
+
+        <label class="field">
+          <span>Confirmar senha</span>
+          <input
+            class="form-control"
+            type="password"
+            [value]="importWalletDto().confirmPassword"
+            (input)="updateField('confirmPassword', $any($event.target).value)"
+            placeholder="Repita a senha"
+          />
+        </label>
+      </div>
+
+      @if (errorMessage()) {
+        <p class="message error">{{ errorMessage() }}</p>
       }
-    </button>
-  </form>
+
+      @if (isSaved()) {
+        <p class="message success">Carteira importada e salva localmente com criptografia.</p>
+      }
+
+      <button class="primary-action submit" type="submit" [disabled]="isLoading()">
+        @if (isLoading()) {
+          Salvando...
+        } @else {
+          Importar carteira
+        }
+      </button>
+    </form>
+  </app-section-card>
 </section>

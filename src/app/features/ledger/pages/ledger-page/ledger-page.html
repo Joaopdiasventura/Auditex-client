@@ -1,0 +1,100 @@
+<section class="ledger-page page-layout">
+  <app-page-header
+    eyebrow="Financial ledger"
+    title="Auditable financial events"
+    description="Search the immutable trail by event type, processing id or file hash."
+  >
+    <a class="primary-action" routerLink="/event/create">Create event</a>
+  </app-page-header>
+
+  <section class="filters">
+    <label>
+      <span>Type</span>
+      <select class="form-control" [value]="typeFilter()" (change)="updateType($any($event.target).value)">
+        <option value="">All event types</option>
+        @for (type of eventTypes; track type) {
+          <option [value]="type">{{ label(type) }}</option>
+        }
+      </select>
+    </label>
+
+    <label>
+      <span>Processing ID</span>
+      <input
+        class="form-control"
+        type="text"
+        [value]="processingIdFilter()"
+        (input)="updateProcessingId($any($event.target).value)"
+        placeholder="uuid"
+      />
+    </label>
+
+    <label>
+      <span>File hash</span>
+      <input
+        class="form-control"
+        type="text"
+        [value]="fileHashFilter()"
+        (input)="updateFileHash($any($event.target).value)"
+        placeholder="sha256"
+      />
+    </label>
+
+    <button class="primary-action" type="button" (click)="applyFilters()" [disabled]="isLoading()">Apply</button>
+    <button class="secondary-action" type="button" (click)="clearFilters()" [disabled]="isLoading()">Clear</button>
+  </section>
+
+  @if (errorMessage()) {
+    <p class="message error">{{ errorMessage() }}</p>
+  }
+
+  <section class="table-shell">
+    <table>
+      <thead>
+        <tr>
+          <th>Event</th>
+          <th>Status</th>
+          <th>Hash</th>
+          <th>Public key</th>
+          <th>Block</th>
+          <th>Mined at</th>
+        </tr>
+      </thead>
+      <tbody>
+        @if (pageData(); as page) {
+          @for (transaction of page.content; track transaction.id) {
+            <tr>
+              <td>
+                <a [routerLink]="['/ledger/transaction', transaction.hash]">{{ label(transaction.type) }}</a>
+                <span>{{ transaction.type }}</span>
+              </td>
+              <td><app-status-badge [status]="transaction.status" /></td>
+              <td><app-hash-value [value]="transaction.hash" /></td>
+              <td>{{ short(transaction.publicKey) }}</td>
+              <td>{{ short(transaction.blockId) }}</td>
+              <td>{{ formatDate(transaction.minedAt) }}</td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="6">No financial events found.</td>
+            </tr>
+          }
+        } @else {
+          <tr>
+            <td colspan="6">{{ isLoading() ? 'Loading events...' : 'No financial events loaded.' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
+
+  @if (pageData(); as page) {
+    <div class="pagination">
+      <span>Page {{ page.page + 1 }} of {{ page.totalPages || 1 }} · {{ page.totalElements }} events</span>
+      <div class="pagination-actions">
+        <button class="secondary-action" type="button" (click)="load(page.page - 1)" [disabled]="page.first || isLoading()">Previous</button>
+        <button class="secondary-action" type="button" (click)="load(page.page + 1)" [disabled]="page.last || isLoading()">Next</button>
+      </div>
+    </div>
+  }
+</section>

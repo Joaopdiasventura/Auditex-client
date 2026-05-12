@@ -1,5 +1,7 @@
 export enum TransactionStatus {
-  PENDING,
-  MINED,
-  REJECTED,
+  PENDING = 'PENDING',
+  PROCESSING = 'PROCESSING',
+  VALIDATED = 'VALIDATED',
+  REJECTED = 'REJECTED',
+  MINED = 'MINED',
 }

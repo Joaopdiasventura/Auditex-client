@@ -1,1 +1,316 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --background: #f5f6f8;
+  --surface: #ffffff;
+  --surface-raised: #f9fafb;
+  --surface-muted: #f0f3f6;
+  --field: #ffffff;
+  --line: #d9dee6;
+  --line-strong: #aeb8c5;
+  --text: #171d26;
+  --muted: #5e6877;
+  --subtle: #eef1f5;
+  --accent: #b68a35;
+  --accent-strong: #7a561d;
+  --accent-soft: #fff5df;
+  --accent-surface: #fffbf2;
+  --accent-border: #dfc188;
+  --success: #2f7450;
+  --success-soft: #e8f3ed;
+  --success-border: #a9d3bb;
+  --warning: #986300;
+  --warning-soft: #fff3d1;
+  --warning-border: #e4c276;
+  --danger: #ad2f29;
+  --danger-soft: #fae8e6;
+  --danger-border: #e6aaa5;
+  --pending: #435c76;
+  --pending-soft: #e8eef5;
+  --nav: #1d2632;
+  --nav-muted: #b8c3d0;
+  --shadow: 0 14px 34px rgba(23, 29, 38, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background:
+    linear-gradient(180deg, #ffffff 0, var(--background) 280px),
+    var(--background);
+  color: var(--text);
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  outline-offset: 3px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(184, 134, 44, 0.38);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
+.page-layout {
+  display: grid;
+  gap: 20px;
+}
+
+.table-shell,
+.filters,
+.pagination,
+.message,
+.empty-state {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.eyebrow,
+.field-label {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.primary-action,
+.secondary-action,
+.danger-action {
+  display: inline-flex;
+  min-height: 42px;
+  min-width: 42px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 800;
+  padding: 10px 14px;
+  text-decoration: none;
+}
+
+.primary-action {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #14100a;
+}
+
+.primary-action:hover {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+  color: #ffffff;
+}
+
+.secondary-action {
+  border-color: var(--line-strong);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.secondary-action:hover {
+  border-color: var(--accent);
+  color: var(--accent-strong);
+}
+
+.danger-action {
+  border-color: var(--danger);
+  background: var(--danger);
+  color: #ffffff;
+}
+
+.form-control {
+  width: 100%;
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  background: var(--field);
+  color: var(--text);
+  padding: 10px 12px;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease;
+}
+
+.form-control::placeholder {
+  color: #8b96a5;
+}
+
+.form-control:hover {
+  border-color: #9faab8;
+}
+
+.form-control:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(182, 138, 53, 0.16);
+}
+
+.table-shell {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+th {
+  background: var(--surface-raised);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+tbody tr:hover {
+  background: var(--accent-surface);
+}
+
+td a {
+  color: var(--text);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+td a:hover {
+  color: var(--accent-strong);
+}
+
+code,
+pre {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+code {
+  color: var(--accent-strong);
+  overflow-wrap: anywhere;
+}
+
+pre {
+  overflow: auto;
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface-muted);
+  color: var(--text);
+  padding: 12px;
+  white-space: pre-wrap;
+}
+
+.message,
+.empty-state {
+  padding: 16px;
+}
+
+.message.error {
+  border-color: var(--danger-border);
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.message.success {
+  border-color: var(--success-border);
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.message.warning {
+  border-color: var(--warning-border);
+  background: var(--warning-soft);
+  color: var(--warning);
+}
+
+.empty-state {
+  color: var(--muted);
+}
+
+.field-label,
+label > span,
+.detail-label {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  color: var(--muted);
+}
+
+.pagination-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+@media (max-width: 900px) {
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  th,
+  td {
+    padding: 12px;
+  }
+
+  .pagination {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .pagination-actions .secondary-action,
+  .pagination-actions .primary-action {
+    flex: 1;
+  }
+}
